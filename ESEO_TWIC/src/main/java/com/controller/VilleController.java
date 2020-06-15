@@ -1,7 +1,7 @@
 package com.controller;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,10 +25,10 @@ class VilleController {
 	// Methode GET
 	@RequestMapping(value = "/villes", method = RequestMethod.GET)
 	@ResponseBody
-	public ArrayList<Ville> appelGet() {
+	public ArrayList<Ville> findAllVilles() {
 		System.out.println("Appel GET");
 
-		ArrayList<Ville> ville = villeBLOService.getInfoVilles();
+		ArrayList<Ville> ville = villeBLOService.findAllVilles();
 
 		return ville;
 	}
@@ -36,7 +36,7 @@ class VilleController {
 	// Methode GET
 		@RequestMapping(value = "/ville", method = RequestMethod.GET)
 		@ResponseBody
-		public Ville ville(@RequestParam(value= "name") String name) {
+		public Ville getInfoVille(@RequestParam(value= "name") String name) {
 			System.out.println("Appel GET");
 
 			Ville ville = villeBLOService.getInfoVille(name);
@@ -44,8 +44,25 @@ class VilleController {
 			return ville;
 		}
 		
+		//Methode POST
 		@PostMapping("create")
 		public void CreerVille(@RequestBody Ville nouvelleVille) {
 			villeBLOService.creerVille(nouvelleVille);
 		}
+		
+		// Methode DELETE
+		@RequestMapping(value = "/ville", method = RequestMethod.DELETE)
+		@ResponseBody
+		public void deleteVille(@RequestParam(value = "codeINSEE") String code) {
+			villeBLOService.deleteVille(code);
+			
+		}
+		
+		// Methode PUT
+		@RequestMapping(value = "/updateVille", method = RequestMethod.PUT)
+		public void updateVille(@RequestBody Ville updatedVille) {
+			villeBLOService.updateVille(updatedVille);
+			
+		}
+		
 }

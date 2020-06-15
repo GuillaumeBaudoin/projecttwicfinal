@@ -15,6 +15,8 @@ import com.dto.Ville;
 @Repository
 public class VilleDAOImpl implements VilleDAO {
 	private static final String SQL_INSERT="INSERT INTO ville_france VALUES(?,?,?,?,?,?,?)";
+	private static final String SQL_DELETE = "DELETE from ville_france where ville_france.Code_commune_INSEE =?";
+	private static final String SQL_UPDATE="UPDATE ville_france set Nom_Commune = ?, code_postal = ? where code_commune_INSEE =?";
 	public ArrayList<Ville> findAllVilles() {
 		
 		Connection con = JDBCConfiguration.getConnection();
@@ -44,7 +46,7 @@ public class VilleDAOImpl implements VilleDAO {
 		return villes;
 	}
 	
-	public Ville findVille(String name) {
+	public Ville getInfoVille(String name) {
 		Connection con = JDBCConfiguration.getConnection();
 		
 		Ville ville = null;
@@ -97,6 +99,56 @@ public class VilleDAOImpl implements VilleDAO {
 	}
 	}
 	
+	
+	public void deleteVille(String code){
+		PreparedStatement preparedStatement = null;
+		try {
+			
+			String query = SQL_DELETE ;
+
+			preparedStatement = JDBCConfiguration.getConnection()
+					.prepareStatement(
+							initialisationRequetePreparee(query, code),
+							Statement.RETURN_GENERATED_KEYS);
+			// execute the query, and get a java resultset
+			preparedStatement.executeUpdate();
+			
+			
+				System.out.println("Ligne supprimée");
+				
+			
+		
+	
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	}
+	
+	public void updateVille(Ville updatedVille){
+		PreparedStatement preparedStatement = null;
+		try {
+			
+			String query = SQL_UPDATE ;
+
+			preparedStatement = JDBCConfiguration.getConnection()
+					.prepareStatement(
+							initialisationRequetePreparee(query, updatedVille.getNom_commune(), updatedVille.getCode_postal(), updatedVille.getCode_commune_INSEE()),
+							Statement.RETURN_GENERATED_KEYS);
+			// execute the query, and get a java resultset
+			preparedStatement.executeUpdate();
+			
+			
+				System.out.println("Ligne modifiée");
+				
+			
+		
+	
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	}
 	
 	
 	

@@ -8,8 +8,12 @@ public interface VilleDAO {
 	
 	public ArrayList<Ville> findAllVilles();
 	
-	public Ville findVille(String name);
+	public Ville getInfoVille(String name);
 	
 	public void creerVille(Ville ville);
+	
+	public void deleteVille(String code);
+	
+	public void updateVille(Ville updatedVille);
 
 }
