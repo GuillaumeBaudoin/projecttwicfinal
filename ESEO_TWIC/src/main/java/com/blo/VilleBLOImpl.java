@@ -36,7 +36,19 @@ public class VilleBLOImpl implements VilleBLO {
 		villeDAO.deleteVille(code);
 	}
 	
-	public void updateVille(Ville updatedVille) {
-		villeDAO.updateVille(updatedVille);	}
+	public void updateVille(Ville updatedVille, String codecommu) {
+		villeDAO.updateVille(updatedVille, codecommu);	}
+	
+	public ArrayList<Ville> trouverVilles(Ville ville){
+		ArrayList<Ville> villes;
+		
+		villes = villeDAO.trouverVilles(ville);
+		return villes;
+	}
+	
+	public void supprimerVille(String code) {
+		 villeDAO.supprimerVille(code);
+		
+	}
 
 }

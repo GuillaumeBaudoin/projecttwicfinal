@@ -1,10 +1,14 @@
 package com.controller;
 
 import java.util.ArrayList;
-
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,11 +62,22 @@ class VilleController {
 			
 		}
 		
+		@GetMapping("trouver")
+        public List<Ville> trouver(@RequestParam(name="codeCommune", defaultValue="") String codeCommune){
+            Ville ville = new Ville();
+            ville.setCode_commune_INSEE(codeCommune);
+            return villeBLOService.trouverVilles(ville);
+        }
+		
 		// Methode PUT
-		@RequestMapping(value = "/updateVille", method = RequestMethod.PUT)
-		public void updateVille(@RequestBody Ville updatedVille) {
-			villeBLOService.updateVille(updatedVille);
-			
-		}
+		@PutMapping("update/{codeCommune}")
+        public void modifier(@RequestBody Ville villeModif, @PathVariable("codeCommune") String codeCommune) {
+            villeBLOService.updateVille(villeModif, codeCommune);
+        }
+		
+		@DeleteMapping("/delete/{codeCommune}")
+        public void supprimer(@PathVariable("codeCommune") String codeCommuneINSEE) {
+            villeBLOService.supprimerVille(codeCommuneINSEE);
+        }
 		
 }

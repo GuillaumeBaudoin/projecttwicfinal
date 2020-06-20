@@ -14,6 +14,9 @@ public interface VilleBLO {
 	
 	public void deleteVille(String code);
 	
-	public void updateVille(Ville updatedVille);
+	public void updateVille(Ville updatedVille, String codecommu);
 	
+	public ArrayList<Ville> trouverVilles(Ville ville);
+	
+	public void supprimerVille(String code);
 }
